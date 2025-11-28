@@ -28,6 +28,7 @@ class Create
 		bool $may_upload = false,
 		bool $may_edit_own_settings = false,
 		bool $may_administrate = false,
+		bool $grants_password_bypass = false,
 		?int $quota_kb = null,
 		?string $note = null,
 	): User {
@@ -42,6 +43,7 @@ class Create
 		$user->may_upload = $may_upload;
 		$user->may_edit_own_settings = $may_edit_own_settings;
 		$user->may_administrate = $may_administrate;
+		$user->grants_password_bypass = $grants_password_bypass;
 		$user->username = $username;
 		$user->email = $email;
 		$user->password = Hash::make($password);
