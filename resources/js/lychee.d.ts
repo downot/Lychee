@@ -271,6 +271,8 @@ declare namespace App.Http.Resources.Embed {
 		id: string;
 		title: string | null;
 		description: string | null;
+		is_video: boolean;
+		duration: string | null;
 		size_variants: App.Http.Resources.Models.SizeVariantsResouce;
 		exif: { [key: string]: string | null };
 	};
@@ -449,11 +451,7 @@ declare namespace App.Http.Resources.GalleryConfigs {
 declare namespace App.Http.Resources.Models {
 	export type AbstractAlbumResource = {
 		config: App.Http.Resources.GalleryConfigs.AlbumConfig;
-		resource:
-			| App.Http.Resources.Models.AlbumResource
-			| App.Http.Resources.Models.SmartAlbumResource
-			| App.Http.Resources.Models.TagAlbumResource
-			| null;
+		resource: App.Http.Resources.Models.AlbumResource | App.Http.Resources.Models.SmartAlbumResource | App.Http.Resources.Models.TagAlbumResource | null;
 	};
 	export type AccessPermissionResource = {
 		id: number | null;
@@ -522,7 +520,7 @@ declare namespace App.Http.Resources.Models {
 	};
 	export type JobHistoryResource = {
 		username: string;
-		status: "ready" | "success" | "failure" | "started";
+		status: 'ready' | 'success' | 'failure' | 'started';
 		created_at: string;
 		updated_at: string;
 		job: string;
@@ -693,6 +691,7 @@ declare namespace App.Http.Resources.Models {
 		may_administrate: boolean;
 		may_upload: boolean;
 		may_edit_own_settings: boolean;
+		grants_password_bypass: boolean;
 		is_owner: boolean;
 		quota_kb: number | null;
 		description: string | null;

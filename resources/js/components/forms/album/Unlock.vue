@@ -5,18 +5,19 @@
 				<p class="mb-5 px-9">{{ $t("dialogs.unlock.password_required") }}</p>
 				<div class="inline-flex flex-col gap-2 px-9">
 					<FloatLabel variant="on">
-						<InputPassword id="albumPassword" v-model="password" @keydown.enter="unlock" />
+						<InputPassword id="albumPassword" v-model="password" :disabled="isUnlocking" @keydown.enter="unlock" />
 						<label for="albumPassword">{{ $t("dialogs.unlock.password") }}</label>
 					</FloatLabel>
 				</div>
 				<div class="flex items-center mt-9">
-					<Button severity="secondary" class="w-full font-bold border-none rounded-bl-xl" @click="hide">
+					<Button severity="secondary" class="w-full font-bold border-none rounded-bl-xl" :disabled="isUnlocking" @click="hide">
 						{{ $t("dialogs.button.cancel") }}
 					</Button>
 					<Button
 						severity="contrast"
 						class="font-bold w-full border-none rounded-none rounded-br-xl"
-						:disabled="!deactivate"
+						:disabled="!deactivate || isUnlocking"
+						:loading="isUnlocking"
 						@click="unlock"
 					>
 						{{ $t("dialogs.unlock.unlock") }}
@@ -47,13 +48,15 @@ const albumStore = useAlbumStore();
 const albumId = computed(() => albumStore.albumId);
 
 const password = ref<string | undefined>(undefined);
+const isUnlocking = ref<boolean>(false);
 const deactivate = computed(() => password.value !== undefined && password.value.length > 0);
 
 function unlock() {
-	if (albumId.value === undefined || password.value === undefined) {
+	if (albumId.value === undefined || password.value === undefined || isUnlocking.value) {
 		return;
 	}
 
+	isUnlocking.value = true;
 	AlbumService.unlock(albumId.value, password.value)
 		.then((_response) => {
 			AlbumService.clearAlbums();
@@ -63,6 +66,9 @@ function unlock() {
 		.catch((_error) => {
 			visible.value = false;
 			emits("fail");
+		})
+		.finally(() => {
+			isUnlocking.value = false;
 		});
 }
 

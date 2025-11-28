@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use App\Services\Verify as AppVerify;
 use LycheeVerify\Verify;
 use Opcodes\LogViewer\Facades\LogViewer;
 use Safe\Exceptions\StreamException;
@@ -87,7 +88,7 @@ class AppServiceProvider extends ServiceProvider
 			GitCommits::class => GitCommits::class,
 			GitTags::class => GitTags::class,
 
-			Verify::class => Verify::class,
+			Verify::class => AppVerify::class,
 
 			MoneyService::class => MoneyService::class,
 		];

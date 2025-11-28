@@ -45,6 +45,7 @@ use function Safe\mb_convert_encoding;
  * @property bool                                                  $may_administrate
  * @property bool                                                  $may_upload
  * @property bool                                                  $may_edit_own_settings
+ * @property bool                                                  $grants_password_bypass
  * @property int                                                   $quota_kb
  * @property string|null                                           $description
  * @property string|null                                           $note
@@ -115,6 +116,7 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
 		'may_administrate' => 'boolean',
 		'may_upload' => 'boolean',
 		'may_edit_own_settings' => 'boolean',
+		'grants_password_bypass' => 'boolean',
 		'quota_kb' => 'integer',
 	];
 

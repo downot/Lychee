@@ -213,7 +213,7 @@ class InitConfig extends Data
 		$is_supporter = $verify->is_supporter();
 
 		// We enable Lychee SE if the user is a supporter.
-		$this->is_se_enabled = $verify->validate() && $is_supporter;
+		$this->is_se_enabled = $verify->validate() && ($is_supporter || $verify->is_trial());
 
 		// We disable preview if we are already a supporter.
 		$this->is_se_preview_enabled = !$is_supporter && Configs::getValueAsBool('enable_se_preview');
