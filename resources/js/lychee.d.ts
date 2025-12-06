@@ -13,56 +13,120 @@ order: App.Enum.OrderSortingType;
 };
 }
 declare namespace App.Enum {
-export type AlbumDecorationOrientation = 'row' | 'row-reverse' | 'column' | 'column-reverse';
-export type AlbumDecorationType = 'none' | 'layers' | 'album' | 'photo' | 'all';
-export type AspectRatioCSSType = 'aspect-5x4' | 'aspect-4x5' | 'aspect-3x2' | 'aspect-square' | 'aspect-2x3' | 'aspect-video';
-export type AspectRatioType = '5/4' | '3/2' | '1/1' | '2/3' | '4/5' | '16/9';
-export type CacheTag = 'gallery' | 'auth' | 'user' | 'settings' | 'statistics' | 'users';
-export type ColumnSortingAlbumType = 'owner_id' | 'created_at' | 'title' | 'description' | 'min_taken_at' | 'max_taken_at';
-export type ColumnSortingPhotoType = 'owner_id' | 'created_at' | 'title' | 'description' | 'taken_at' | 'is_starred' | 'type';
-export type ColumnSortingType = 'owner_id' | 'created_at' | 'title' | 'description' | 'min_taken_at' | 'max_taken_at' | 'taken_at' | 'is_starred' | 'type';
-export type ConfigType = 'int' | 'positive' | 'string' | 'string_required' | '0|1' | '0|1|2' | '' | 'admin_user' | 'license' | 'map_provider' | 'currency';
-export type CountType = 'taken_at' | 'created_at';
-export type CoverFitType = 'cover' | 'fit';
-export type DateOrderingType = 'older_younger' | 'younger_older';
-export type DbDriverType = 'mysql' | 'pgsql' | 'sqlite';
-export type DefaultAlbumProtectionType = 1 | 2 | 3 | 4;
-export type DownloadVariantType = 'LIVEPHOTOVIDEO' | 'ORIGINAL' | 'MEDIUM2X' | 'MEDIUM' | 'SMALL2X' | 'SMALL' | 'THUMB2X' | 'THUMB';
-export type FileStatus = 'uploading' | 'processing' | 'ready' | 'skipped' | 'done' | 'error';
-export type FlowStrategy = 'auto' | 'opt-in';
-export type ImageOverlayType = 'none' | 'desc' | 'date' | 'exif';
-export type JobStatus = 0 | 1 | 2 | 3;
-export type LicenseType = 'none' | 'reserved' | 'CC0' | 'CC-BY-1.0' | 'CC-BY-2.0' | 'CC-BY-2.5' | 'CC-BY-3.0' | 'CC-BY-4.0' | 'CC-BY-ND-1.0' | 'CC-BY-ND-2.0' | 'CC-BY-ND-2.5' | 'CC-BY-ND-3.0' | 'CC-BY-ND-4.0' | 'CC-BY-SA-1.0' | 'CC-BY-SA-2.0' | 'CC-BY-SA-2.5' | 'CC-BY-SA-3.0' | 'CC-BY-SA-4.0' | 'CC-BY-NC-1.0' | 'CC-BY-NC-2.0' | 'CC-BY-NC-2.5' | 'CC-BY-NC-3.0' | 'CC-BY-NC-4.0' | 'CC-BY-NC-ND-1.0' | 'CC-BY-NC-ND-2.0' | 'CC-BY-NC-ND-2.5' | 'CC-BY-NC-ND-3.0' | 'CC-BY-NC-ND-4.0' | 'CC-BY-NC-SA-1.0' | 'CC-BY-NC-SA-2.0' | 'CC-BY-NC-SA-2.5' | 'CC-BY-NC-SA-3.0' | 'CC-BY-NC-SA-4.0';
-export type LiveMetricsAccess = 'logged-in users' | 'admin';
-export type MapProviders = 'Wikimedia' | 'OpenStreetMap.org' | 'OpenStreetMap.de' | 'OpenStreetMap.fr' | 'RRZE';
-export type MessageType = 'info' | 'warning' | 'error';
-export type MetricsAccess = 'public' | 'logged-in users' | 'owner' | 'admin';
-export type MetricsAction = 'visit' | 'favourite' | 'download' | 'shared';
-export type OauthProvidersType = 'amazon' | 'apple' | 'authelia' | 'authentik' | 'facebook' | 'github' | 'google' | 'mastodon' | 'microsoft' | 'nextcloud' | 'keycloak';
-export type OmnipayProviderType = 'Dummy' | 'Mollie' | 'PayPal_Express' | 'PayPal_ExpressInContext' | 'PayPal_Pro' | 'PayPal_Rest' | 'Stripe';
-export type OrderSortingType = 'ASC' | 'DESC';
-export type PaymentStatusType = 'pending' | 'cancelled' | 'failed' | 'refunded' | 'processing' | 'completed';
-export type PhotoLayoutType = 'square' | 'justified' | 'masonry' | 'grid';
-export type PhotoThumbInfoType = 'title' | 'description';
-export type PurchasableLicenseType = 'personal' | 'commercial' | 'extended';
-export type PurchasableSizeVariantType = 'medium' | 'medium2x' | 'original' | 'full';
-export type RenamerModeType = 'first' | 'all' | 'regex' | 'trim' | 'strtolower' | 'strtoupper' | 'ucwords' | 'ucfirst';
-export type SeverityType = 'emergency' | 'alert' | 'critical' | 'error' | 'warning' | 'notice' | 'info' | 'debug';
-export type ShiftType = 'relative' | 'absolute';
-export type ShiftX = 'left' | 'right';
-export type ShiftY = 'up' | 'down';
-export type SizeVariantType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
-export type SmallLargeType = 'small' | 'large';
-export type SmartAlbumType = 'unsorted' | 'starred' | 'recent' | 'on_this_day' | 'untagged';
-export type StorageDiskType = 'images' | 's3';
-export type ThumbAlbumSubtitleType = 'description' | 'takedate' | 'creation' | 'oldstyle' | 'num_photos' | 'num_albums' | 'num_photos_albums';
-export type ThumbOverlayVisibilityType = 'never' | 'always' | 'hover';
-export type TimelineAlbumGranularity = 'default' | 'disabled' | 'year' | 'month' | 'day';
-export type TimelinePhotoGranularity = 'default' | 'disabled' | 'year' | 'month' | 'day' | 'hour';
-export type UpdateStatus = 0 | 1 | 2 | 3;
-export type UserGroupRole = 'member' | 'admin';
-export type VersionChannelType = 'release' | 'git' | 'tag';
-export type WatermarkPosition = 'top-left' | 'top' | 'top-right' | 'left' | 'center' | 'right' | 'bottom-left' | 'bottom' | 'bottom-right';
+	export type AlbumDecorationOrientation = "row" | "row-reverse" | "column" | "column-reverse";
+	export type AlbumDecorationType = "none" | "layers" | "album" | "photo" | "all";
+	export type AspectRatioCSSType = "aspect-5x4" | "aspect-4x5" | "aspect-3x2" | "aspect-square" | "aspect-2x3" | "aspect-video";
+	export type AspectRatioType = "5/4" | "3/2" | "1/1" | "2/3" | "4/5" | "16/9";
+	export type CacheTag = "gallery" | "auth" | "user" | "settings" | "statistics" | "users";
+	export type ColumnSortingAlbumType = "owner_id" | "created_at" | "title" | "description" | "min_taken_at" | "max_taken_at";
+	export type ColumnSortingPhotoType = "owner_id" | "created_at" | "title" | "description" | "taken_at" | "is_starred" | "type";
+	export type ColumnSortingType =
+		| "owner_id"
+		| "created_at"
+		| "title"
+		| "description"
+		| "min_taken_at"
+		| "max_taken_at"
+		| "taken_at"
+		| "is_starred"
+		| "type";
+	export type ConfigType =
+		| "int"
+		| "positive"
+		| "string"
+		| "string_required"
+		| "0|1"
+		| "0|1|2"
+		| ""
+		| "admin_user"
+		| "license"
+		| "map_provider"
+		| "currency";
+	export type CountType = "taken_at" | "created_at";
+	export type CoverFitType = "cover" | "fit";
+	export type DateOrderingType = "older_younger" | "younger_older";
+	export type DbDriverType = "mysql" | "pgsql" | "sqlite";
+	export type DefaultAlbumProtectionType = 1 | 2 | 3 | 4;
+	export type DownloadVariantType = "LIVEPHOTOVIDEO" | "ORIGINAL" | "MEDIUM2X" | "MEDIUM" | "SMALL2X" | "SMALL" | "THUMB2X" | "THUMB";
+	export type FileStatus = "uploading" | "processing" | "ready" | "skipped" | "done" | "error";
+	export type FlowStrategy = "auto" | "opt-in";
+	export type ImageOverlayType = "none" | "desc" | "date" | "exif";
+	export type JobStatus = 0 | 1 | 2 | 3;
+	export type LicenseType =
+		| "none"
+		| "reserved"
+		| "CC0"
+		| "CC-BY-1.0"
+		| "CC-BY-2.0"
+		| "CC-BY-2.5"
+		| "CC-BY-3.0"
+		| "CC-BY-4.0"
+		| "CC-BY-ND-1.0"
+		| "CC-BY-ND-2.0"
+		| "CC-BY-ND-2.5"
+		| "CC-BY-ND-3.0"
+		| "CC-BY-ND-4.0"
+		| "CC-BY-SA-1.0"
+		| "CC-BY-SA-2.0"
+		| "CC-BY-SA-2.5"
+		| "CC-BY-SA-3.0"
+		| "CC-BY-SA-4.0"
+		| "CC-BY-NC-1.0"
+		| "CC-BY-NC-2.0"
+		| "CC-BY-NC-2.5"
+		| "CC-BY-NC-3.0"
+		| "CC-BY-NC-4.0"
+		| "CC-BY-NC-ND-1.0"
+		| "CC-BY-NC-ND-2.0"
+		| "CC-BY-NC-ND-2.5"
+		| "CC-BY-NC-ND-3.0"
+		| "CC-BY-NC-ND-4.0"
+		| "CC-BY-NC-SA-1.0"
+		| "CC-BY-NC-SA-2.0"
+		| "CC-BY-NC-SA-2.5"
+		| "CC-BY-NC-SA-3.0"
+		| "CC-BY-NC-SA-4.0";
+	export type LiveMetricsAccess = "logged-in users" | "admin";
+	export type MapProviders = "Wikimedia" | "OpenStreetMap.org" | "OpenStreetMap.de" | "OpenStreetMap.fr" | "RRZE";
+	export type MessageType = "info" | "warning" | "error";
+	export type MetricsAccess = "public" | "logged-in users" | "owner" | "admin";
+	export type MetricsAction = "visit" | "favourite" | "download" | "shared";
+	export type OauthProvidersType =
+		| "amazon"
+		| "apple"
+		| "authelia"
+		| "authentik"
+		| "facebook"
+		| "github"
+		| "google"
+		| "mastodon"
+		| "microsoft"
+		| "nextcloud"
+		| "keycloak";
+	export type OmnipayProviderType = "Dummy" | "Mollie" | "PayPal_Express" | "PayPal_ExpressInContext" | "PayPal_Pro" | "PayPal_Rest" | "Stripe";
+	export type OrderSortingType = "ASC" | "DESC";
+	export type PaymentStatusType = "pending" | "cancelled" | "failed" | "refunded" | "processing" | "offline" | "completed" | "closed";
+	export type PhotoLayoutType = "square" | "justified" | "masonry" | "grid";
+	export type PhotoThumbInfoType = "title" | "description";
+	export type PurchasableLicenseType = "personal" | "commercial" | "extended";
+	export type PurchasableSizeVariantType = "medium" | "medium2x" | "original" | "full";
+	export type RenamerModeType = "first" | "all" | "regex" | "trim" | "strtolower" | "strtoupper" | "ucwords" | "ucfirst";
+	export type SeverityType = "emergency" | "alert" | "critical" | "error" | "warning" | "notice" | "info" | "debug";
+	export type ShiftType = "relative" | "absolute";
+	export type ShiftX = "left" | "right";
+	export type ShiftY = "up" | "down";
+	export type SizeVariantType = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+	export type SmallLargeType = "small" | "large";
+	export type SmartAlbumType = "unsorted" | "starred" | "recent" | "on_this_day" | "untagged";
+	export type StorageDiskType = "images" | "s3";
+	export type ThumbAlbumSubtitleType = "description" | "takedate" | "creation" | "oldstyle" | "num_photos" | "num_albums" | "num_photos_albums";
+	export type ThumbOverlayVisibilityType = "never" | "always" | "hover";
+	export type TimelineAlbumGranularity = "default" | "disabled" | "year" | "month" | "day";
+	export type TimelinePhotoGranularity = "default" | "disabled" | "year" | "month" | "day" | "hour";
+	export type UpdateStatus = 0 | 1 | 2 | 3;
+	export type UserGroupRole = "member" | "admin";
+	export type VersionChannelType = "release" | "git" | "tag";
+	export type WatermarkPosition = "top-left" | "top" | "top-right" | "left" | "center" | "right" | "bottom-left" | "bottom" | "bottom-right";
 }
 declare namespace App.Http.Resources.Admin {
 export type ImportDirectoryResource = {
@@ -822,83 +886,87 @@ total: number;
 };
 }
 declare namespace App.Http.Resources.Shop {
-export type CatalogResource = {
-album_purchasable: App.Http.Resources.Shop.PurchasableResource | null;
-children_purchasables: App.Http.Resources.Shop.PurchasableResource[];
-photo_purchasables: App.Http.Resources.Shop.PurchasableResource[];
-};
-export type CheckoutOptionResource = {
-currency: string;
-allow_guest_checkout: boolean;
-terms_url: string;
-privacy_url: string;
-payment_providers: App.Enum.OmnipayProviderType[];
-};
-export type CheckoutResource = {
-is_success: boolean;
-is_redirect: boolean;
-redirect_url: string | null;
-message: string;
-order: App.Http.Resources.Shop.OrderResource | null;
-};
-export type ConfigOptionResource = {
-currency: string;
-default_price_cents: number;
-default_license: App.Enum.PurchasableLicenseType;
-default_size: App.Enum.PurchasableSizeVariantType;
-};
-export type EditablePurchasableResource = {
-purchasable_id: number;
-album_id: string | null;
-album_title: string | null;
-photo_id: string | null;
-photo_title: string | null;
-photo_url: string | null;
-prices: App.Http.Resources.Shop.PriceResource[]|null;
-owner_notes: string | null;
-description: string | null;
-is_active: boolean;
-};
-export type OrderItemResource = {
-id: number;
-order_id: number;
-purchasable_id: number | null;
-album_id: string | null;
-photo_id: string | null;
-title: string;
-license_type: App.Enum.PurchasableLicenseType;
-price: string;
-size_variant_type: App.Enum.PurchasableSizeVariantType;
-item_notes: string | null;
-};
-export type OrderResource = {
-id: number;
-provider: App.Enum.OmnipayProviderType | null;
-transaction_id: string;
-username: string | null;
-email: string | null;
-status: App.Enum.PaymentStatusType;
-amount: string;
-paid_at: string | null;
-created_at: string | null;
-comment: string | null;
-items: App.Http.Resources.Shop.OrderItemResource[]|null;
-can_process_payment: boolean;
-};
-export type PriceResource = {
-size_variant: App.Enum.PurchasableSizeVariantType;
-license_type: App.Enum.PurchasableLicenseType;
-price: string;
-price_cents: number;
-};
-export type PurchasableResource = {
-purchasable_id: number;
-album_id: string | null;
-photo_id: string | null;
-prices: App.Http.Resources.Shop.PriceResource[]|null;
-description: string;
-is_active: boolean;
-};
+	export type CatalogResource = {
+		album_purchasable: App.Http.Resources.Shop.PurchasableResource | null;
+		children_purchasables: App.Http.Resources.Shop.PurchasableResource[];
+		photo_purchasables: App.Http.Resources.Shop.PurchasableResource[];
+	};
+	export type CheckoutOptionResource = {
+		currency: string;
+		allow_guest_checkout: boolean;
+		is_offline: boolean;
+		terms_url: string;
+		privacy_url: string;
+		payment_providers: App.Enum.OmnipayProviderType[];
+		mollie_profile_id: string;
+		stripe_public_key: string;
+		is_test_mode: boolean;
+	};
+	export type CheckoutResource = {
+		is_success: boolean;
+		is_redirect: boolean;
+		redirect_url: string | null;
+		message: string;
+		order: App.Http.Resources.Shop.OrderResource | null;
+	};
+	export type ConfigOptionResource = {
+		currency: string;
+		default_price_cents: number;
+		default_license: App.Enum.PurchasableLicenseType;
+		default_size: App.Enum.PurchasableSizeVariantType;
+	};
+	export type EditablePurchasableResource = {
+		purchasable_id: number;
+		album_id: string | null;
+		album_title: string | null;
+		photo_id: string | null;
+		photo_title: string | null;
+		photo_url: string | null;
+		prices: App.Http.Resources.Shop.PriceResource[] | null;
+		owner_notes: string | null;
+		description: string | null;
+		is_active: boolean;
+	};
+	export type OrderItemResource = {
+		id: number;
+		order_id: number;
+		purchasable_id: number | null;
+		album_id: string | null;
+		photo_id: string | null;
+		title: string;
+		license_type: App.Enum.PurchasableLicenseType;
+		price: string;
+		size_variant_type: App.Enum.PurchasableSizeVariantType;
+		item_notes: string | null;
+	};
+	export type OrderResource = {
+		id: number;
+		provider: App.Enum.OmnipayProviderType | null;
+		transaction_id: string;
+		username: string | null;
+		email: string | null;
+		status: App.Enum.PaymentStatusType;
+		amount: string;
+		paid_at: string | null;
+		created_at: string | null;
+		comment: string | null;
+		items: App.Http.Resources.Shop.OrderItemResource[] | null;
+		can_process_payment: boolean;
+	};
+	export type PriceResource = {
+		size_variant: App.Enum.PurchasableSizeVariantType;
+		license_type: App.Enum.PurchasableLicenseType;
+		price: string;
+		price_cents: number;
+	};
+	export type PurchasableResource = {
+		purchasable_id: number;
+		album_id: string | null;
+		photo_id: string | null;
+		prices: App.Http.Resources.Shop.PriceResource[] | null;
+		description: string;
+		is_active: boolean;
+	};
 }
 declare namespace App.Http.Resources.Statistics {
 export type Album = {
