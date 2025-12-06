@@ -21,6 +21,7 @@ return [
     'create_edit' => [
         'upload_rights' => 'User can upload content.',
         'edit_rights' => 'User can modify their profile (username, password).',
+        'password_bypass' => 'User can bypass password-protected albums (except albums with special restriction).',
         'admin_rights' => 'User has admin rights.',
         'quota' => 'User has quota limit.',
         'quota_kb' => 'quota in kB (0 for default)',

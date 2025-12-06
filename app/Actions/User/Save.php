@@ -34,6 +34,7 @@ class Save
 		bool $may_upload,
 		bool $may_edit_own_settings,
 		bool $may_administrate = false,
+		bool $grants_password_bypass = false,
 		?int $quota_kb = null,
 		?string $note = null,
 	): void {
@@ -54,6 +55,7 @@ class Save
 		$user->may_upload = $may_upload;
 		$user->may_edit_own_settings = $may_edit_own_settings;
 		$user->may_administrate = $may_administrate;
+		$user->grants_password_bypass = $grants_password_bypass;
 		$user->note = $note;
 		$user->quota_kb = $quota_kb;
 		if ($password !== null && $password !== '') {

@@ -42,8 +42,8 @@ Route::get('/Albums', [Gallery\AlbumsController::class, 'get'])->middleware(['lo
 /**
  * ALBUM.
  */
-Route::get('/Album', [Gallery\AlbumController::class, 'get'])->middleware(['login_required:album', 'cache_control']);
-Route::get('/Album::getTargetListAlbums', [Gallery\AlbumController::class, 'getTargetListAlbums'])->middleware(['login_required:album', 'cache_control']);
+Route::get('/Album', [Gallery\AlbumController::class, 'get'])->middleware(['login_required:album', 'unlock_with_password', 'cache_control']);
+Route::get('/Album::getTargetListAlbums', [Gallery\AlbumController::class, 'getTargetListAlbums'])->middleware(['login_required:album', 'unlock_with_password', 'cache_control']);
 Route::post('/Album::unlock', [Gallery\AlbumController::class, 'unlock']);
 Route::post('/Album', [Gallery\AlbumController::class, 'createAlbum']);
 Route::patch('/Album', [Gallery\AlbumController::class, 'updateAlbum']);

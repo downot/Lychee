@@ -21,6 +21,7 @@ class UserManagementResource extends Data
 	public bool $may_administrate;
 	public bool $may_upload;
 	public bool $may_edit_own_settings;
+	public bool $grants_password_bypass;
 	public bool $is_owner;
 
 	public ?int $quota_kb = null;
@@ -43,6 +44,7 @@ class UserManagementResource extends Data
 		$this->may_administrate = $user->may_administrate;
 		$this->may_upload = $user->may_upload || $user->may_administrate;
 		$this->may_edit_own_settings = $user->may_edit_own_settings || $user->may_administrate;
+		$this->grants_password_bypass = $user->grants_password_bypass;
 		if ($is_se) {
 			$this->quota_kb = $user->quota_kb;
 			$this->description = $user->description;

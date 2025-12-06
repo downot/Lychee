@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Album\Unlock;
 use App\Exceptions\ModelDBException;
 use App\Exceptions\UnauthenticatedException;
 use App\Http\Requests\Session\LoginRequest;
@@ -35,13 +36,19 @@ class AuthController extends Controller
 	 * @throws UnauthenticatedException
 	 * @throws ModelDBException
 	 */
-	public function login(LoginRequest $request): void
+	public function login(LoginRequest $request, Unlock $unlock): void
 	{
 		if (Auth::attempt([
 			'username' => $request->username(),
 			'password' => $request->password(),
 		])) {
 			Log::channel('login')->notice(__METHOD__ . ':' . __LINE__ . ' -- User (' . $request->username() . ') has logged in from ' . $request->ip());
+
+			/** @var User $user */
+			$user = Auth::user();
+			if ($user->grants_password_bypass === true) {
+				$unlock->propagateWithBypass();
+			}
 
 			return;
 		}

@@ -30,6 +30,10 @@ class Unlock
 	 * If the password is correct, then all albums which can be unlocked with
 	 * the same password are unlocked, too.
 	 *
+	 * Additionally, if the current user has grants_password_bypass permission
+	 * and the album does not have requires_password_despite_bypass flag set,
+	 * the album will be unlocked without checking the password.
+	 *
 	 * @param BaseAlbum $album
 	 * @param string    $password
 	 *
@@ -46,6 +50,22 @@ class Unlock
 			) {
 				return;
 			}
+
+			// Check if user has password bypass permission
+			// and album does not require password despite bypass
+			$user = \Illuminate\Support\Facades\Auth::user();
+			if (
+				$user !== null &&
+				$user->grants_password_bypass === true &&
+				$album->base_class->requires_password_despite_bypass === false
+			) {
+				// User has bypass permission and album allows bypass
+				// Unlock this album and all albums with the same password
+				$this->propagateWithBypass();
+
+				return;
+			}
+
 			if (Hash::check($password, $album_password)) {
 				$this->propagate($password);
 
@@ -78,6 +98,26 @@ class Unlock
 			if (Hash::check($password, $album->password)) {
 				$this->album_policy->unlock($album);
 			}
+		}
+	}
+
+	/**
+	 * Unlocks all albums that do not have requires_password_despite_bypass flag set.
+	 * Used when user has grants_password_bypass permission.
+	 */
+	public function propagateWithBypass(): void
+	{
+		// Unlock all password-protected albums that allow bypass
+		$albums = BaseAlbumImpl::query()
+			->select(['base_albums.id', 'base_albums.owner_id', 'base_albums.requires_password_despite_bypass'])
+			->join(APC::ACCESS_PERMISSIONS, 'base_album_id', '=', 'base_albums.id', 'inner')
+			->whereNull(APC::ACCESS_PERMISSIONS . '.user_id')
+			->whereNotNull(APC::PASSWORD)
+			->where('base_albums.requires_password_despite_bypass', '=', false)
+			->get();
+		/** @var BaseAlbumImpl $album */
+		foreach ($albums as $album) {
+			$this->album_policy->unlock($album);
 		}
 	}
 }

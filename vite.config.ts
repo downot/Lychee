@@ -100,8 +100,17 @@ const baseConfig = {
 } as UserConfig;
 
 function getCorsSettings(env: Record<string, string>) {
+	const origins = [
+		env.APP_URL ?? 'http://localhost',
+		'http://localhost',
+		'http://localhost:8000',
+		'http://127.0.0.1:8000',
+	];
+	// Remove duplicates
+	const uniqueOrigins = [...new Set(origins)];
+	
 	return {
-		"origin": env.APP_URL ?? 'http://localhost',
+		"origin": uniqueOrigins,
 		"methods": "GET",
 		"preflightContinue": false,
 		"optionsSuccessStatus": 204

@@ -7,6 +7,7 @@ type UserManagementCreateRequest = {
 	may_upload: boolean;
 	may_administrate: boolean;
 	may_edit_own_settings: boolean;
+	grants_password_bypass?: boolean;
 	has_quota?: boolean;
 	quota_kb?: number;
 	note?: string;
