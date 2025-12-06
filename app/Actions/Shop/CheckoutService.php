@@ -16,9 +16,12 @@ use App\Factories\OmnipayFactory;
 use App\Models\Order;
 use App\Services\MoneyService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\Dummy\Message\Response as DummyResponse;
+use Omnipay\Mollie\Message\Response\FetchTransactionResponse;
 
 /**
  * Service for handling checkout operations using Omnipay.
@@ -80,6 +83,13 @@ class CheckoutService
 
 			// Handle the response
 			if ($response->isRedirect()) {
+				if ($response instanceof FetchTransactionResponse) {
+					$metadata = $response->getMetadata();
+					$reference = $response->getTransactionReference();
+					$metadata['transactionReference'] = $reference;
+					Session::put('metadata.' . $order->id, $metadata);
+				}
+
 				if (!$response instanceof RedirectResponseInterface) {
 					throw new LycheeLogicException('Expected RedirectResponseInterface for redirect response.');
 				}
@@ -94,13 +104,21 @@ class CheckoutService
 					redirect_url: $redirect_url,
 				);
 			} elseif ($response->isSuccessful()) {
+				if ($response instanceof DummyResponse) {
+					// We need those metadata for later completion
+					$metadata = [];
+					$reference = $response->getTransactionReference();
+					$metadata['transactionReference'] = $reference;
+					Session::put('metadata.' . $order->id, $metadata);
+				}
+
 				// Payment was successful
-				$this->completePayment($order, $response);
+				$order->transaction_id = $response->getTransactionReference();
+				$order->save();
 
 				return new CheckoutDTO(
 					is_success: true,
 					is_redirect: false,
-					redirect_url: $return_url,
 				);
 			} else {
 				// Payment failed
@@ -113,8 +131,6 @@ class CheckoutService
 				);
 			}
 		} catch (\Exception|InvalidCreditCardException $e) {
-			// dd($e);
-			// TODO: later do better error management
 			Log::error('Error processing payment: ' . $e->getMessage(), [
 				'order_id' => $order->id,
 				'transaction_id' => $order->transaction_id,
@@ -151,22 +167,23 @@ class CheckoutService
 	/**
 	 * Handle the return from the payment gateway.
 	 *
-	 * @param Order               $order        The order being processed
-	 * @param array               $request_data The request data from the payment gateway
-	 * @param OmnipayProviderType $provider     The payment provider used
+	 * @param Order               $order    The order being processed
+	 * @param OmnipayProviderType $provider The payment provider used
 	 *
 	 * @return Order|null The updated order if found, null otherwise
 	 */
-	public function handlePaymentReturn(Order $order, array $request_data, OmnipayProviderType $provider): ?Order
+	public function handlePaymentReturn(Order $order, OmnipayProviderType $provider): ?Order
 	{
+		$metadata = Session::get('metadata.' . $order->id, []);
+		Log::info('Payment return metadata', ['metadata' => $metadata]);
+
 		$gateway = $this->omnipay_factory->create_gateway($provider);
 
 		try {
 			if ($order->status !== PaymentStatusType::PROCESSING) {
 				throw new LycheeLogicException('Order with invalid status.');
 			}
-
-			$response = $gateway->completePurchase($request_data)->send();
+			$response = $gateway->completePurchase($metadata)->send();
 			if ($response->isSuccessful()) {
 				return $this->completePayment($order, $response);
 			} else {
