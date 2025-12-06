@@ -105,7 +105,7 @@ class Unlock
 	 * Unlocks all albums that do not have requires_password_despite_bypass flag set.
 	 * Used when user has grants_password_bypass permission.
 	 */
-	private function propagateWithBypass(): void
+	public function propagateWithBypass(): void
 	{
 		// Unlock all password-protected albums that allow bypass
 		$albums = BaseAlbumImpl::query()
