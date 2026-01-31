@@ -39,7 +39,7 @@ final class ConfigKeyRequireSupportRule implements ValidationRule
 
 		/** @var string $value */
 		$config = Configs::where('key', '=', $value)->firstOrFail();
-		if ($config->level === 1 && !$this->verify->is_supporter()) {
+		if ($config->level === 1 && !$this->verify->is_supporter() && !$this->verify->is_trial()) {
 			$fail('Error: This functionality is only available in the Supporter Edition of Lychee. See here: https://lycheeorg.dev/get-supporter-edition/');
 
 			return;
