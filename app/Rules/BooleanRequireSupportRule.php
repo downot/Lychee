@@ -32,7 +32,7 @@ final class BooleanRequireSupportRule implements ValidationRule
 			return;
 		}
 
-		if ($this->verify->is_supporter()) {
+		if ($this->verify->is_supporter() || $this->verify->is_trial()) {
 			return;
 		}
 
