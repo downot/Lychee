@@ -67,7 +67,8 @@ class Unlock
 			}
 
 			if (Hash::check($password, $album_password)) {
-				$this->propagate($password);
+				// Only unlock the current album for better performance
+				$this->album_policy->unlock($album);
 
 				return;
 			}
