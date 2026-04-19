@@ -18,6 +18,10 @@
 					<Checkbox v-model="may_edit_own_settings" input-id="mayEdit" :binary="true" />
 					<label for="mayEdit" class="ltr:ml-2 rtl:mr-2 cursor-pointer">{{ $t("users.create_edit.edit_rights") }}</label>
 				</div>
+				<div class="w-full items-center text-muted-color">
+					<Checkbox v-model="grants_password_bypass" input-id="grantsPasswordBypass" :binary="true" />
+					<label for="grantsPasswordBypass" class="ltr:ml-2 rtl:mr-2 cursor-pointer">{{ $t("users.create_edit.password_bypass") }}</label>
+				</div>
 				<div v-if="is_se_enabled || is_se_preview_enabled" class="w-full items-center text-muted-color">
 					<Checkbox
 						v-model="may_administrate"
@@ -110,6 +114,7 @@ const password = ref<string | undefined>(undefined);
 const may_edit_own_settings = ref(props.user?.may_edit_own_settings ?? false);
 const may_administrate = ref(props.user?.may_administrate ?? false);
 const may_upload = ref(props.user?.may_upload ?? false);
+const grants_password_bypass = ref(props.user?.grants_password_bypass ?? false);
 const has_quota = ref(props.user?.quota_kb !== undefined && props.user?.quota_kb !== null);
 const quota_kb = ref(props.user?.quota_kb?.toString() ?? "0");
 
@@ -129,6 +134,7 @@ function createUser() {
 		may_edit_own_settings: may_edit_own_settings.value,
 		may_administrate: may_administrate.value,
 		may_upload: may_upload.value,
+		grants_password_bypass: grants_password_bypass.value,
 		has_quota: is_se_enabled ? has_quota.value : undefined,
 		quota_kb: is_se_enabled ? parseInt(quota_kb.value) : undefined,
 		note: is_se_enabled ? note.value : undefined,
@@ -139,6 +145,7 @@ function createUser() {
 			may_upload.value = false;
 			may_administrate.value = false;
 			may_edit_own_settings.value = false;
+			grants_password_bypass.value = false;
 			username.value = undefined;
 			has_quota.value = false;
 			quota_kb.value = "0";
@@ -165,6 +172,7 @@ function editUser() {
 		may_edit_own_settings: may_edit_own_settings.value,
 		may_administrate: may_administrate.value,
 		may_upload: may_upload.value,
+		grants_password_bypass: grants_password_bypass.value,
 		has_quota: is_se_enabled ? has_quota.value : undefined,
 		quota_kb: is_se_enabled ? parseInt(quota_kb.value) : undefined,
 		note: is_se_enabled ? note.value : undefined,
@@ -175,6 +183,7 @@ function editUser() {
 			may_upload.value = false;
 			may_administrate.value = false;
 			may_edit_own_settings.value = false;
+			grants_password_bypass.value = false;
 			username.value = undefined;
 			has_quota.value = false;
 			quota_kb.value = "0";
@@ -194,6 +203,7 @@ watch(
 		may_edit_own_settings.value = newUser?.may_edit_own_settings ?? false;
 		may_administrate.value = newUser?.may_administrate ?? false;
 		may_upload.value = newUser?.may_upload ?? false;
+		grants_password_bypass.value = newUser?.grants_password_bypass ?? false;
 		has_quota.value = newUser?.quota_kb !== undefined && newUser?.quota_kb !== null;
 		quota_kb.value = newUser?.quota_kb?.toString() ?? "0";
 	},

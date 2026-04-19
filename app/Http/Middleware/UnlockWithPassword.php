@@ -31,6 +31,8 @@ class UnlockWithPassword
 	/**
 	 * Handle an incoming request.
 	 * If a password is provided, we try to unlock the album or fail silently.
+	 * If user has grants_password_bypass permission and album does not have
+	 * requires_password_despite_bypass flag, unlock album automatically.
 	 *
 	 * @param Request  $request the incoming request to serve
 	 * @param \Closure $next    the next operation to be applied to the
@@ -45,6 +47,20 @@ class UnlockWithPassword
 
 		if (in_array($album_id, SmartAlbumType::values(), true)) {
 			return $next($request);
+		}
+
+		// Check if user has password bypass permission
+		$user = \Illuminate\Support\Facades\Auth::user();
+		if ($user !== null && $user->grants_password_bypass === true) {
+			try {
+				$album = $this->album_factory->findBaseAlbumOrFail($album_id);
+				// If album does not require password despite bypass, unlock it
+				if ($album->base_class->requires_password_despite_bypass === false) {
+					$this->unlock->do($album, ''); // Empty password will trigger bypass logic
+				}
+			} catch (\Exception) {
+				// fail silently
+			}
 		}
 
 		if (!$request->filled('password')) {

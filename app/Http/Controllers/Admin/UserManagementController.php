@@ -41,7 +41,7 @@ class UserManagementController extends Controller
 	public function list(ManagmentListUsersRequest $request, Spaces $spaces): Collection
 	{
 		/** @var Collection<int,User> $users */
-		$users = User::select(['id', 'username', 'may_administrate', 'may_upload', 'may_edit_own_settings', 'quota_kb', 'description', 'note'])->orderBy('id', 'asc')->get();
+		$users = User::select(['id', 'username', 'may_administrate', 'may_upload', 'may_edit_own_settings', 'grants_password_bypass', 'quota_kb', 'description', 'note'])->orderBy('id', 'asc')->get();
 		$spaces_per_user = $spaces->getFullSpacePerUser();
 		$zipped = $users->zip($spaces_per_user);
 
@@ -61,6 +61,7 @@ class UserManagementController extends Controller
 			may_upload: $request->mayUpload(),
 			may_edit_own_settings: $request->mayEditOwnSettings(),
 			may_administrate: $request->mayAdministrate(),
+			grants_password_bypass: $request->grantsPasswordBypass(),
 			quota_kb: $request->quota_kb(),
 			note: $request->note()
 		);
@@ -95,6 +96,7 @@ class UserManagementController extends Controller
 			may_upload: $request->mayUpload(),
 			may_edit_own_settings: $request->mayEditOwnSettings(),
 			may_administrate: $request->mayAdministrate(),
+			grants_password_bypass: $request->grantsPasswordBypass(),
 			quota_kb: $request->quota_kb(),
 			note: $request->note()
 		);

@@ -22,6 +22,7 @@ return [
     'create_edit' => [
         'upload_rights' => 'User can upload content.',
         'edit_rights' => 'User can modify their profile (username, password).',
+        'password_bypass' => '使用者可以無密碼存取加密相簿（特殊限制的相簿除外）。',
         'admin_rights' => 'User has admin rights.',
         'quota' => 'User has quota limit.',
         'quota_kb' => 'quota in kB (0 for default)',

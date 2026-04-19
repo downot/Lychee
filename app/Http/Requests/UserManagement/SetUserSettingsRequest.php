@@ -42,6 +42,7 @@ class SetUserSettingsRequest extends BaseApiRequest implements HasUsername, HasP
 	protected bool $may_upload = false;
 	protected bool $may_edit_own_settings = false;
 	protected bool $may_administrate = false;
+	protected bool $grants_password_bypass = false;
 
 	/**
 	 * {@inheritDoc}
@@ -63,6 +64,7 @@ class SetUserSettingsRequest extends BaseApiRequest implements HasUsername, HasP
 			RequestAttribute::MAY_UPLOAD_ATTRIBUTE => 'present|boolean',
 			RequestAttribute::MAY_EDIT_OWN_SETTINGS_ATTRIBUTE => 'present|boolean',
 			RequestAttribute::MAY_ADMINISTRATE => ['sometimes', 'boolean', new BooleanRequireSupportRule(false, $this->verify)],
+			RequestAttribute::GRANTS_PASSWORD_BYPASS_ATTRIBUTE => 'sometimes|boolean',
 			RequestAttribute::HAS_QUOTA_ATTRIBUTE => ['sometimes', 'boolean', new BooleanRequireSupportRule(false, $this->verify)],
 			RequestAttribute::QUOTA_ATTRIBUTE => ['sometimes', 'int', new IntegerRequireSupportRule(0, $this->verify)],
 			RequestAttribute::NOTE_ATTRIBUTE => ['sometimes', 'nullable', 'string', new StringRequireSupportRule('', $this->verify)],
@@ -85,6 +87,7 @@ class SetUserSettingsRequest extends BaseApiRequest implements HasUsername, HasP
 		$this->may_upload = static::toBoolean($values[RequestAttribute::MAY_UPLOAD_ATTRIBUTE]);
 		$this->may_edit_own_settings = static::toBoolean($values[RequestAttribute::MAY_EDIT_OWN_SETTINGS_ATTRIBUTE]);
 		$this->may_administrate = static::toBoolean($values[RequestAttribute::MAY_ADMINISTRATE] ?? false);
+		$this->grants_password_bypass = static::toBoolean($values[RequestAttribute::GRANTS_PASSWORD_BYPASS_ATTRIBUTE] ?? false);
 		/** @var int $user_id */
 		$user_id = $values[RequestAttribute::ID_ATTRIBUTE];
 		$this->user2 = User::query()->findOrFail($user_id);
@@ -106,5 +109,10 @@ class SetUserSettingsRequest extends BaseApiRequest implements HasUsername, HasP
 	public function mayAdministrate(): bool
 	{
 		return $this->may_administrate;
+	}
+
+	public function grantsPasswordBypass(): bool
+	{
+		return $this->grants_password_bypass;
 	}
 }
